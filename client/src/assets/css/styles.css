@@ -1,0 +1,13 @@
+.centered{
+    text-align: center;
+}
+
+#homeJumbotron, #accessForms{
+    margin-top: 100px;
+    background-color: #4e5d6c;
+}
+
+#accessForms input, #accessForms button, #accessForms .form-group{
+    margin: 0;
+    height: 60px;
+}

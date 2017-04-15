@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+//Import the Components
+import {HomeComponent} from './home/home.component';
+import {RegisterPageComponent} from './register-page/register-page.component';
+
 const routes: Routes = [
   {
     path: '',
-    children: []
+    component : HomeComponent
+  },
+  {
+    path: 'register',
+    component : RegisterPageComponent
   }
 ];
 

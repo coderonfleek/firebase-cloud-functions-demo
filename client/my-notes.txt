@@ -1,0 +1,32 @@
+############ Error: Module not found: Error: Can't resolve 'promise-polyfill' ###########
+Run 'npm install promise-polyfill --save-exact'
+
+##End
+
+############ Error: Client doesn't have permission to access the desired data ###########
+In the Firebase 3.0 SDK, Default security rules require users to be authenticated
+If you want to ovveride this, go to your Database section in your project and click the rules Tab
+
+##End
+
+
+############ Note: Firebase Authentication ###########
+Remember to Enable the auth providers you will be using on your Firebase Console
+
+##End
+
+############ Error: Sign In issue with google on chrome ###########
+Chrome sometimes throws an error while trying to sign-in with Google, use firefox for your test instead
+Most of the fixes online require downgrading to firebase 3.3.0
+What was initially installed was ^3.7.8
+
+##End
+
+############ Error: Cannot read property subscribe of undefined ###########
+Every memeber of your class of the type EventEmitter must be instantiated in the constructor thus
+E.g =>  this.submit = new EventEmitter();
+##
+
+############ Issue: Component @Input property not available in constructor ###########
+Set them up in ngOninit instead, they dont seem to be available in the constructor
+##End

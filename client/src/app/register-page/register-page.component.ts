@@ -6,6 +6,8 @@ import {AuthService} from '../auth.service';
 
 import { ToastrService } from 'ngx-toastr';
 
+import {UserService} from '../user.service';
+
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
@@ -14,9 +16,11 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterPageComponent implements OnInit {
 
   courses : FirebaseListObservable<any[]>;
+  user$;
 
-  constructor(af : AngularFire, private auth : AuthService, private toastrService: ToastrService) { 
+  constructor(af : AngularFire, private auth : AuthService, private toastrService: ToastrService, private userService : UserService) { 
     //this.courses = af.database.list('/courses');
+    this.user$ = this.userService.user$;
 
     console.log(this.courses);
   }
@@ -30,6 +34,11 @@ export class RegisterPageComponent implements OnInit {
     .then(
       (data) => {
         console.log(data);
+        
+        var userdetails = this.userService.getUserDetails(data);
+
+        this.userService.updateUser(userdetails);
+
         this.toastrService.success('User Successfully Created', 'Success');
       },
       (err) => {

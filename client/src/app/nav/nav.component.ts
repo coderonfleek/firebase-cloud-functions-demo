@@ -3,6 +3,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import {AuthService} from '../auth.service';
 
+import {UserService} from '../user.service';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -11,24 +14,12 @@ import {AuthService} from '../auth.service';
 export class NavComponent implements OnInit {
 
   authInstance$;
-  user;
+  user$;
+  initialUserData;
 
-  constructor(private auth : AuthService, private toastrService: ToastrService) { 
-
-    this.authInstance$ = auth.getAuth();
-    //console.log(this.authInstance$);
-
-    this.authInstance$.subscribe(authObject => {
-
-      if(authObject){
-
-        this.user = auth.getUserDetails(authObject);
-        console.log(this.user);
-
-        this.toastrService.info('You are logged In', 'Status');
-      }
-      
-    })
+  constructor(private auth : AuthService, private toastrService: ToastrService, private userService : UserService, private router : Router) { 
+    this.user$ = userService.user$;
+    
   }
 
   /*isAuthenticated(){
@@ -37,12 +28,31 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.auth.logout();
+    this.userService.updateUser(null);
     this.toastrService.success('You are now logged out', 'Info');
+    this.router.navigate(['/']);
     
   }
 
   ngOnInit() {
     console.log(this.authInstance$);
+
+    //check if there is an instance of the firebase user object and update the user
+    this.authInstance$ = this.auth.getAuth();
+    //console.log(this.authInstance$);
+
+    this.authInstance$.subscribe(authObject => {
+
+      if(authObject){
+
+        this.initialUserData = this.auth.getUserDetails(authObject);
+        this.userService.updateUser(this.initialUserData);
+        this.router.navigate(['/profile']);
+
+        this.toastrService.info('You are logged In', 'Status');
+      }
+      
+    })
   }
 
 }

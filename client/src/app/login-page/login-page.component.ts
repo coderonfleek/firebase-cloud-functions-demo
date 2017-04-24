@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../auth.service';
 
 import { ToastrService } from 'ngx-toastr';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,7 +15,7 @@ export class LoginPageComponent implements OnInit {
 
   formOperation : string = 'login';
 
-  constructor(private auth : AuthService, private toastrService: ToastrService, private router : Router) { 
+  constructor(private auth : AuthService, private toastrService: ToastrService, private router : Router, private userService : UserService) { 
 
   }
 
@@ -27,6 +28,13 @@ export class LoginPageComponent implements OnInit {
     .then(
       (data) => {
         console.log(data);
+
+        var userdetails = this.userService.getUserDetails(data);
+
+        //Update Store
+        this.userService.updateUser(userdetails);
+        console.log(userdetails);
+
         this.toastrService.success('User Successfully Logged In', 'Success');
 
         this.router.navigate(['/profile']);

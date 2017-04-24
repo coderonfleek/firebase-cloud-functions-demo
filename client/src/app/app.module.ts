@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
+import {StoreModule} from '@ngrx/store';
 
 /* Third Party Modules*/
 
@@ -26,7 +27,11 @@ import { GoogleLoginComponent } from './google-login/google-login.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 
-
+/**
+ * Reducers
+ */
+import {userReducer} from './reducers/user.reducer';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -45,9 +50,10 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     HttpModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    StoreModule.provideStore({ userReducer })
   ],
-  providers: [AuthService],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
